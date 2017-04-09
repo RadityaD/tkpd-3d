@@ -9,6 +9,9 @@
 	<script src="./js/three.js"></script>
 	<script src="./js/ColladaLoader.js"></script>
 	<script src="./js/CombinedCamera.js"></script>
+	<script src="./js/Animation.js"></script>
+	<script src="./js/AnimationHandler.js"></script>
+	<script src="./js/KeyFrameAnimation.js"></script>	
 
 	<script src="./js/Projector.js"></script>
 	<script src="./js/CanvasRenderer.js"></script>
@@ -19,10 +22,13 @@
 	<script>
 		var camera, renderer, loader, container;
 		var cubeMesh;
+		var mixer;
+		var clock = new THREE.Clock();
+		// var handler = THREE.AnimationHandler.CATMULLROM;
 		var dae;
 
 		init();
-		render();
+		animate();
 
 		function init() {
 
@@ -50,7 +56,7 @@
 			camera.position.z = -10;
 
 			camera.toOrthographic();
-			camera.setZoom(2);
+			camera.setZoom(1.5);
 
 			//init grid
 			var size = 10;
@@ -59,101 +65,70 @@
 			var gridHelper = new THREE.GridHelper( size, divisions );
 			scene.add( gridHelper );
 			
-			
+			mixer = new THREE.AnimationMixer( scene );
+			loader = new THREE.JSONLoader();
+			// loader.setTexturePath('models');
+			// loader.load('./models/owl-only.json', function(obj, mats){
+			// 	// obj.computeVertexNormals();
+			// 	// obj.computeTangents();
+			// 	// obj.mergeVertices();
+			// 	mats.forEach(function(mat){
+			// 		mat.skinning = true;
+			// 		mat.morphTargets = true;
+			// 	});
 
-			//init cube
-			// var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-			// var material = new THREE.MeshLambertMaterial( { color: 0xffffff, overdraw: 0.5 } );
-			// cubeMesh = new THREE.Mesh(geometry, material);
-			// scene.add(cubeMesh);
+			// 	var owlMats = new THREE.MultiMaterial( mats );
+			// 	// var owlMesh = new THREE.Mesh(obj, owlMats);
+			// 	var owlMesh = new THREE.SkinnedMesh(obj, owlMats);
+				
 
-			
+			// 	owlMesh.rotation.z = (180 * Math.PI) / 180;
+			// 	owlMesh.rotation.x = (-90 * Math.PI) / 180;
+			// 	// owlMesh.rotation.z = (180 * Math.PI) / 90;
+			// 	scene.add(owlMesh);
+				
+			// 	// for(var i = 0; i < obj.animations.length; i++) {
+			// 		mixer.clipAction(obj.animations[0], owlMesh).play();var clip = THREE.AnimationClip.CreateFromMorphTargetSequence( 'gallop', obj.morphTargets, 30 );
+			// 		mixer.clipAction( clip ).setDuration( 1 ).play();
+			// 	// }
+				
+			// });
 
-			//init models
-			loader = new THREE.ObjectLoader();
-			// loader.options.convertUpAxis = true;
-			loader.load('./models/tkpd-main.json', function(obj){
-				// console.log(obj);
-				// console.log(mat);
-				// obj.mergeVertices()
-				// obj.computeVertexNormals();
-				// var matts = new THREE.MeshPhongMaterial({color:0xff0000, shininess: 100, specular: '#a9fcff', overdraw: 1});
-				// matts.shading = THREE.SmoothShading;
-				// var mm = new THREE.Mesh(obj, matts);
-				// mm.position.x = mm.position.y = mm.position.z = 0;
-				// scene.add(mm);
-				var owlMaterials = new THREE.MultiMaterial( materials );
+			loader.load('./models/cube.json', function(geometry, materials) {
 
-				obj.traverse(function(child){
-					console.log(child.material);
-					if(obj.name == 'Owl') {
-						obj.material = owlMaterials;
-					}
+				materials.forEach(function(material){
+					material.morphTargets = true;
 				});
 
+			var cubeMats = new THREE.MultiMaterial(materials)
+			var cube = new THREE.Mesh(geometry, cubeMats);
+			scene.add(cube);
+			mixer = new THREE.AnimationMixer( cube );
+			var clip = THREE.AnimationClip.CreateFromMorphTargetSequence( 'test', geometry.morphTargets, 30 );
+					mixer.clipAction( clip ).setDuration( 1 ).play();
+					
 
-				
-				// scene.add(obj);
-			});
-
-			
-
-			loader = new THREE.JSONLoader();
-			loader.setTexturePath('./models');
-			loader.load('./models/owl-only.json', function(obj, mats){
-				obj.computeVertexNormals();
-				// obj.computeTangents();
-				// obj.mergeVertices();
-				var materials = [
-
-						//EyeSocket
-					    new THREE.MeshPhongMaterial({ 
-					    	color: 592137,
-					    	specular: 8355711,
-					    	shininess: 100, 
-				    	}),
-				    	//tkpd-green
-					    new THREE.MeshPhongMaterial({ 
-					    	color: 881936,
-					    	specular: 8355711,
-					    	shininess: 100,
-				    	}),
-				    	//tkpd-darkgreen - side
-					    new THREE.MeshPhongMaterial({ 
-					    	color: '#1F5522',
-					    	specular: 8355711,
-					    	shininess: 100,
-				    	}),
-				    	//front
-					    new THREE.MeshPhongMaterial({ 
-					    	color: 881936,
-					    	specular: 8355711,
-					    	shininess: 100,
-				    	}),
-					    new THREE.MeshBasicMaterial( { color: 0x00ffff } ), // back
-					    new THREE.MeshBasicMaterial( { color: 0x00ffff } ), // back
-					    new THREE.MeshBasicMaterial( { color: 0x00ffff } ), // back
-
-					];
-				var owlMats = new THREE.MultiMaterial( materials ); 
-				var owlMesh = new THREE.Mesh(obj, owlMats);
-				owlMesh.rotation.y = (180 * Math.PI) / 180;
-				scene.add(owlMesh);
 			});
 
 			//init lights
-			var ambientLight = new THREE.AmbientLight(0xffffff, 1);
+			var ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
 			scene.add( ambientLight );
 
-			var pointLight = new THREE.PointLight(0xffffff, 0.5);
+			var pointLight = new THREE.PointLight(0xffffff, 1);
 			pointLight.position.y = 5;
 			scene.add(pointLight);
 
 		}
 
-		function render() {
-			// cubeMesh.rotation.x += 0.1;
-			requestAnimationFrame(render);
+		function animate() {
+			requestAnimationFrame(animate);
+			var delta = clock.getDelta();
+			mixer.update( delta );
+
+			render();
+		}
+
+		function render() {			
 			camera.lookAt(scene.position);
 			renderer.render( scene, camera );
 		}
