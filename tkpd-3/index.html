@@ -21,11 +21,8 @@
 	<div id="theDiv"></div>
 	<script>
 		var camera, renderer, loader, container;
-		var cubeMesh;
 		var mixer;
 		var clock = new THREE.Clock();
-		// var handler = THREE.AnimationHandler.CATMULLROM;
-		var dae;
 
 		init();
 		animate();
@@ -65,50 +62,45 @@
 			var gridHelper = new THREE.GridHelper( size, divisions );
 			scene.add( gridHelper );
 			
-			mixer = new THREE.AnimationMixer( scene );
 			loader = new THREE.JSONLoader();
-			// loader.setTexturePath('models');
-			// loader.load('./models/owl-only.json', function(obj, mats){
-			// 	// obj.computeVertexNormals();
-			// 	// obj.computeTangents();
-			// 	// obj.mergeVertices();
-			// 	mats.forEach(function(mat){
-			// 		mat.skinning = true;
-			// 		mat.morphTargets = true;
-			// 	});
-
-			// 	var owlMats = new THREE.MultiMaterial( mats );
-			// 	// var owlMesh = new THREE.Mesh(obj, owlMats);
-			// 	var owlMesh = new THREE.SkinnedMesh(obj, owlMats);
-				
-
-			// 	owlMesh.rotation.z = (180 * Math.PI) / 180;
-			// 	owlMesh.rotation.x = (-90 * Math.PI) / 180;
-			// 	// owlMesh.rotation.z = (180 * Math.PI) / 90;
-			// 	scene.add(owlMesh);
-				
-			// 	// for(var i = 0; i < obj.animations.length; i++) {
-			// 		mixer.clipAction(obj.animations[0], owlMesh).play();var clip = THREE.AnimationClip.CreateFromMorphTargetSequence( 'gallop', obj.morphTargets, 30 );
-			// 		mixer.clipAction( clip ).setDuration( 1 ).play();
-			// 	// }
-				
-			// });
-
-			loader.load('./models/cube.json', function(geometry, materials) {
-
-				materials.forEach(function(material){
-					material.morphTargets = true;
+			loader.load('./models/owl-compat.json', function(obj, mats){
+				// obj.computeVertexNormals();
+				// obj.computeTangents();
+				// obj.mergeVertices();
+				mats.forEach(function(mat){
+					mat.skinning = true;
+					// mat.morphTargets = true;
 				});
 
-			var cubeMats = new THREE.MultiMaterial(materials)
-			var cube = new THREE.Mesh(geometry, cubeMats);
-			scene.add(cube);
-			mixer = new THREE.AnimationMixer( cube );
-			var clip = THREE.AnimationClip.CreateFromMorphTargetSequence( 'test', geometry.morphTargets, 30 );
-					mixer.clipAction( clip ).setDuration( 1 ).play();
-					
+				var owlMats = new THREE.MultiMaterial( mats );
+				var owlMesh = new THREE.SkinnedMesh(obj, owlMats);
+				
+				owlMesh.rotation.z = (180 * Math.PI) / 180;
+				owlMesh.rotation.x = (180 * Math.PI) / 180;
+
+				scene.add(owlMesh);
+				mixer = new THREE.AnimationMixer( owlMesh );
+				mixer.clipAction(obj.animations[2]).play();
 
 			});
+
+			// loader.load('./models/animated-cube.json', function(geometry, materials) {
+
+			// 	materials.forEach(function(material){
+			// 		material.skinning = true;
+			// 		// material.morphTargets = true;
+			// 	});
+
+			// var cubeMats = new THREE.MultiMaterial(materials);
+			// var cube = new THREE.SkinnedMesh(geometry, cubeMats);
+			// // var cube = new THREE.Mesh(geometry, cubeMats);
+			// scene.add(cube);
+			// mixer = new THREE.AnimationMixer( cube );
+			// // var clip = THREE.AnimationClip.CreateFromMorphTargetSequence( 'test', geometry.morphTargets, 30 );
+			// mixer.clipAction(geometry.animations[0]).play();
+					
+
+			// });
 
 			//init lights
 			var ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
@@ -122,14 +114,13 @@
 
 		function animate() {
 			requestAnimationFrame(animate);
-			var delta = clock.getDelta();
-			mixer.update( delta );
-
 			render();
 		}
 
 		function render() {			
 			camera.lookAt(scene.position);
+			var delta = clock.getDelta();
+			mixer.update( delta );
 			renderer.render( scene, camera );
 		}
 
