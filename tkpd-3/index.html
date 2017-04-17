@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script 
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+	</script>
+	<script src="./js/three.js"></script>
+	<script src="./js/ColladaLoader.js"></script>
+	<script src="./js/CombinedCamera.js"></script>
+	<script src="./js/Animation.js"></script>
+	<script src="./js/AnimationHandler.js"></script>
+	<script src="./js/KeyFrameAnimation.js"></script>	
+
+	<script src="./js/Projector.js"></script>
+	<script src="./js/CanvasRenderer.js"></script>
+
+</head>
+<body>
+	<div id="theDiv"></div>
+	<script>
+		var camera, renderer, loader, container;
+		var mixer;
+		var clock = new THREE.Clock();
+
+		init();
+		animate();
+
+		function init() {
+
+			//init dom container
+			container = document.createElement( 'div' );
+			document.body.appendChild( container );
+
+			//init renderer
+			renderer = new THREE.WebGLRenderer();
+			renderer.setClearColor(0xdddddd);
+			renderer.setPixelRatio(window.devicePixelRatio);
+			renderer.setSize(window.innerWidth, window.innerHeight);
+
+			container.appendChild( renderer.domElement );
+			// $('#theDiv').add(renderer.domElement);
+			
+			//init scene
+			scene = new THREE.Scene();
+
+			//init camera
+			camera = new THREE.CombinedCamera(window.innerWidth / 2, window.innerHeight / 2, 1, 1, 1000, 1, 5000);
+
+			camera.position.x = 5;
+			camera.position.y = 5;
+			camera.position.z = -10;
+
+			camera.toOrthographic();
+			camera.setZoom(1.5);
+
+			//init grid
+			var size = 10;
+			var divisions = 10;
+
+			var gridHelper = new THREE.GridHelper( size, divisions );
+			scene.add( gridHelper );
+			
+			loader = new THREE.JSONLoader();
+			loader.load('./models/owl-compat.json', function(obj, mats){
+				// obj.computeVertexNormals();
+				// obj.computeTangents();
+				// obj.mergeVertices();
+				mats.forEach(function(mat){
+					mat.skinning = true;
+					// mat.morphTargets = true;
+				});
+
+				var owlMats = new THREE.MultiMaterial( mats );
+				var owlMesh = new THREE.SkinnedMesh(obj, owlMats);
+				
+				owlMesh.rotation.z = (180 * Math.PI) / 180;
+				owlMesh.rotation.x = (180 * Math.PI) / 180;
+
+				scene.add(owlMesh);
+				mixer = new THREE.AnimationMixer( owlMesh );
+				mixer.clipAction(obj.animations[2]).play();
+
+			});
+
+			// loader.load('./models/animated-cube.json', function(geometry, materials) {
+
+			// 	materials.forEach(function(material){
+			// 		material.skinning = true;
+			// 		// material.morphTargets = true;
+			// 	});
+
+			// var cubeMats = new THREE.MultiMaterial(materials);
+			// var cube = new THREE.SkinnedMesh(geometry, cubeMats);
+			// // var cube = new THREE.Mesh(geometry, cubeMats);
+			// scene.add(cube);
+			// mixer = new THREE.AnimationMixer( cube );
+			// // var clip = THREE.AnimationClip.CreateFromMorphTargetSequence( 'test', geometry.morphTargets, 30 );
+			// mixer.clipAction(geometry.animations[0]).play();
+					
+
+			// });
+
+			//init lights
+			var ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+			scene.add( ambientLight );
+
+			var pointLight = new THREE.PointLight(0xffffff, 1);
+			pointLight.position.y = 5;
+			scene.add(pointLight);
+
+		}
+
+		function animate() {
+			requestAnimationFrame(animate);
+			render();
+		}
+
+		function render() {			
+			camera.lookAt(scene.position);
+			var delta = clock.getDelta();
+			mixer.update( delta );
+			renderer.render( scene, camera );
+		}
+
+
+	</script>
+</body>
+</html>
