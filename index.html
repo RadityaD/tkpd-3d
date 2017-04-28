@@ -2,23 +2,146 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>F-oh-F</title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="style.css">
 	<script 
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
 	</script>
 	<script src="./js/three.js"></script>
-	<!--<script src="./js/ColladaLoader.js"></script>-->
 	<script src="./js/CombinedCamera.js"></script>
 	<script src="./js/Animation.js"></script>
 	<script src="./js/AnimationHandler.js"></script>
 	<script src="./js/KeyFrameAnimation.js"></script>	
-
 	<script src="./js/Projector.js"></script>
-	<!--<script src="./js/CanvasRenderer.js"></script>-->
 
 </head>
 <body>
-	<div id="theDiv"></div>
+	<!-- Start Top Navigation -->
+	<div class="top-navigation">
+		<div class="container">
+			<div class="logo">
+				<div class="top-navigation-bar"></div>
+				<a href="https://www.tokopedia.com/"><img src="https://ecs7.tokopedia.net/valentine/wp-content/uploads/2017/01/12002628/tokopedia-logo.png" alt=""></a>
+			</div>												
+				<ul class="hidden-xs hidden-sm nav navbar-nav navbar-right inline-block pull-right">
+					<li>
+						<div class="bridge-widget inline-block">
+							<button class="bw-button">Expander</button>
+							<div class="bw-container">
+								<div class="bw-item">
+									<a href="https://www.tokopedia.com/">
+										<div class="bw-icon__wrapper">
+											<div class="bw-icon bw-icon-toped">
+											</div>
+										</div>
+										<p class="bw-icon__text">
+											Jual Beli Online
+										</p>
+										<span class="clear-b"></span>
+									</a>
+								</div>
+								<div class="bw-item">
+									<a href="https://tiket.tokopedia.com/kereta-api">
+										<div class="bw-icon__wrapper">
+											<div class="bw-icon bw-icon-tiket">
+											</div>
+										</div>
+										<p class="bw-icon__text">
+											Tiket
+										</p>
+										<span class="clear-b"></span>
+									</a>
+								</div>
+								<div class="bw-item">
+									<a href="https://pulsa.tokopedia.com/token-listrik/">
+										<div class="bw-icon__wrapper">
+											<div class="bw-icon bw-icon-listrik">
+											</div>
+										</div>
+										<p class="bw-icon__text">
+											Token Listrik
+										</p>
+										<span class="clear-b"></span>
+									</a>
+								</div>
+								<div class="bw-item">
+									<a href="https://pulsa.tokopedia.com/">
+										<div class="bw-icon__wrapper">
+											<div class="bw-icon bw-icon-pulsa">
+											</div>
+										</div>
+										<p class="bw-icon__text">
+											Pulsa
+										</p>
+										<span class="clear-b"></span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+
+				<div class="top-navigation-menu">
+					<div class="menu-header">
+						MENU
+						<div class="pull-right">
+							<a href="#" class="menu-close">&times;</a>
+						</div>
+					</div>
+				</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<!-- End Top Navigation -->
+
+	<div class="container">
+		<div id="canvas" class="content">
+			<div class="text">
+				<div class="text-header">
+					<h1>Halaman Tidak Ditemukan</h1>
+					<h3>Maaf, halaman yang anda tuju tidak ditemukan (Error 404)</h3>
+				</div>
+				<div class="text-body">
+					<h1 class="text-body__h1">Apa yang dapat Anda lakukan selanjutnya?</h1>
+					<ol>
+						<li>Periksa kembali apakah alamat URL yang Anda masukan sudah benar.</li>
+						<li>Anda dapat kembali ke halaman Beranda Tokopedia.</li>
+						<li>Gunakan tombol Menu diatas untuk menuju halaman lain dari Tokopedia.</li>
+						<li>Untuk informasi lebih lanjut silahkan kunjungi halaman pusat bantuan kami.</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<div class="footer">
+	<div class="container">
+		<div class="pull-left footer-copyright">
+			&copy; 2009-2017, PT Tokopedia
+		</div>
+		
+		<div class="pull-right footer-connect">
+			<ul>
+			<li><a href="https://itunes.apple.com/us/app/tokopedia/id1001394201?ls=1&mt=8" target="_blank"><img class="footer-connect__apps" src="https://ecs7.tokopedia.net/assets/images/store/appstore.png" alt="appstore"></a></li>
+			<li><a href="https://play.google.com/store/apps/details?id=com.tokopedia.tkpd" target="_blank"><img class="footer-connect__apps" src="https://ecs7.tokopedia.net/assets/images/store/googleplay.png" alt="playstore"></a></li>
+			</ul>
+			<ul>
+				<li><a href="https://www.facebook.com/tokopedia" target="_blank"><img class="footer-connect__socmed" src="https://ecs7.tokopedia.net/assets/images/social/facebook.png" alt="facebook"></a></li>
+				<li><a href="http://instagram.com/tokopedia" target="_blank"><img class="footer-connect__socmed" src="https://ecs7.tokopedia.net/assets/images/social/instagram.png" alt="instagram"></a></li>
+				<li><a href="https://twitter.com/tokopedia" target="_blank"><img class="footer-connect__socmed" src="https://ecs7.tokopedia.net/assets/images/social/twitter.png" alt="twitter"></a></li>
+				<li><a href="https://www.youtube.com/user/tokopedia" target="_blank"><img class="footer-connect__socmed" src="https://ecs7.tokopedia.net/assets/images/social/youtube.png" alt="youtube"></a></li>
+				<li><a href="https://plus.google.com/+tokopedia/posts" target="_blank"><img class="footer-connect__socmed" src="https://ecs7.tokopedia.net/assets/images/social/googleplus.png" alt="google_plus"></a></li>
+				<li><a href="https://blog.tokopedia.com/" target="_blank"><img class="footer-connect__socmed" src="https://ecs7.tokopedia.net/assets/images/social/blog.png" alt="blog_tokopedia"></a></li>
+			</ul>
+			</div>
+		</div>	
+</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js
+Copy
+"></script>
+	<script src="scripts-controller.js"></script>
 	<script>
 		var camera, renderer, loader, container;
 		var mixer;
@@ -33,44 +156,53 @@
 
 		function init() {
 
+			var $ww = $('#canvas').width();
+			// var $wh = $('#canvas').height();
 			//init dom container
-			container = document.createElement( 'div' );
-			document.body.appendChild( container );
+			// container = document.createElement( 'div' );
+			container = document.getElementById( 'canvas' );
+			// document.body.appendChild( container );
 
 			//init renderer
-			renderer = new THREE.WebGLRenderer({ antialias: true });
-			renderer.setClearColor(0xdddddd);
+			renderer = new THREE.WebGLRenderer();
+			renderer.setClearColor(0xffffff);
 			renderer.setPixelRatio(window.devicePixelRatio);
-			renderer.setSize(window.innerWidth, window.innerHeight);
+			renderer.setSize($ww, ($ww / 21)*9);
+			// renderer.setSize('100%', '100%');
 
-			container.appendChild( renderer.domElement );
-			// $('#theDiv').add(renderer.domElement);
+			container.insertBefore( renderer.domElement, container.firstChild );
+			// $('.container').add(renderer.domElement);
 			
 			//init scene
 			scene = new THREE.Scene();
 
 			//init camera
-			camera = new THREE.CombinedCamera(window.innerWidth, window.innerHeight, 1, 1, 1000, 1, 5000);
+			camera = new THREE.CombinedCamera($ww, ($ww / 21)*9, 1, 1, 1000, 1, 5000);
 
 			camera.position.x = -5;
 			camera.position.y = 5;
 			camera.position.z = -10;
 
 			camera.toOrthographic();
-			camera.setZoom(1);
+			camera.setZoom(2);
 
 			//init grid
 			var size = 10;
 			var divisions = 10;
 
-			var gridHelper = new THREE.GridHelper( size, divisions );
-			scene.add( gridHelper );
+			// var gridHelper = new THREE.GridHelper( size, divisions );
+			// scene.add( gridHelper );
+
+			loader = new THREE.ObjectLoader();
+			loader.load('./models/4x4.json', function(obj){
+				scene.add(obj);
+			});
 			
 			loader = new THREE.JSONLoader();
 			loader.load('./models/THE-NEW-TKPD.json', function(obj, mats){
-				// obj.computeVertexNormals();
-				// obj.computeTangents();
-				// obj.mergeVertices();
+				obj.computeVertexNormals();
+				obj.computeTangents();
+				obj.mergeVertices();
 				mats.forEach(function(mat){
 					mat.skinning = true;
 					mat.morphTargets = true;
@@ -93,24 +225,6 @@
 				mixer.clipAction(clip).play();
 
 			});
-
-			// loader.load('./models/animated-cube.json', function(geometry, materials) {
-
-			// 	materials.forEach(function(material){
-			// 		material.skinning = true;
-			// 		// material.morphTargets = true;
-			// 	});
-
-			// var cubeMats = new THREE.MultiMaterial(materials);
-			// var cube = new THREE.SkinnedMesh(geometry, cubeMats);
-			// // var cube = new THREE.Mesh(geometry, cubeMats);
-			// scene.add(cube);
-			// mixer = new THREE.AnimationMixer( cube );
-			// // var clip = THREE.AnimationClip.CreateFromMorphTargetSequence( 'test', geometry.morphTargets, 30 );
-			// mixer.clipAction(geometry.animations[0]).play();
-					
-
-			// });
 
 			//init lights
 			var ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
